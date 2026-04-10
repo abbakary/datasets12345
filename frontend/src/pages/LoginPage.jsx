@@ -30,6 +30,7 @@ import {
 
 // ---- Utils ----
 import { getDashboardPath } from "../utils/roleRedirect";
+import { validateMockCredentials } from "../utils/mockCredentials";
 
 // ---- Backend ----
 const API_BASE = import.meta.env?.VITE_API_BASE || "http://127.0.0.1:8000";
@@ -260,8 +261,30 @@ export default function LoginPage() {
     try {
       setLoading(true);
 
+      const normalizedEmail = form.email.trim().toLowerCase();
+
+      // Check for mock credentials first
+      const mockUser = validateMockCredentials(normalizedEmail, form.password);
+
+      if (mockUser) {
+        // Use mock credentials
+        clearStoredAuth();
+
+        const storage = form.remember ? localStorage : sessionStorage;
+        const mockToken = `mock_token_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+        storage.setItem(TOKEN_KEY, mockToken);
+        storage.setItem(USER_KEY, JSON.stringify(mockUser));
+        window.dispatchEvent(new Event("auth:updated"));
+
+        const redirectPath = getDashboardPath(mockUser?.role);
+        toast("success", `Welcome ${mockUser.name}! (${mockUser.role})`);
+        navigate(redirectPath, { replace: true });
+        return;
+      }
+
+      // If not a mock credential, try real API
       const loginRes = await api.post("/auth/login", {
-        email: form.email.trim().toLowerCase(),
+        email: normalizedEmail,
         password: form.password,
       });
 
@@ -290,7 +313,7 @@ export default function LoginPage() {
         const detail = meError?.response?.data?.detail;
 
         meData = {
-          email: form.email.trim().toLowerCase(),
+          email: normalizedEmail,
           role: "viewer",
           status: "pending",
         };
@@ -930,6 +953,159 @@ export default function LoginPage() {
                 >
                   © {new Date().getFullYear()} Dali Data Portal
                 </Typography>
+
+                <Divider sx={{ borderColor: "rgba(255,255,255,0.12)", my: 2 }} />
+
+                <Typography
+                  sx={{
+                    fontSize: 11,
+                    fontWeight: 600,
+                    color: "rgba(255,255,255,0.6)",
+                    textTransform: "uppercase",
+                    mb: 1.5,
+                    letterSpacing: "0.5px",
+                  }}
+                >
+                  Demo Credentials
+                </Typography>
+
+                <Box sx={{ display: "flex", flexDirection: "column", gap: 1 }}>
+                  <Box
+                    onClick={() => {
+                      setForm({ email: "viewer@demo.com", password: "demo123", remember: true });
+                    }}
+                    sx={{
+                      p: 1.2,
+                      borderRadius: 1,
+                      backgroundColor: "rgba(94,196,195,0.10)",
+                      border: "1px solid rgba(94,196,195,0.25)",
+                      cursor: "pointer",
+                      transition: "all 0.25s",
+                      "&:hover": {
+                        backgroundColor: "rgba(94,196,195,0.20)",
+                        borderColor: "rgba(94,196,195,0.50)",
+                      },
+                    }}
+                  >
+                    <Typography sx={{ fontSize: 11, fontWeight: 600, color: "#fff" }}>
+                      Viewer
+                    </Typography>
+                    <Typography sx={{ fontSize: 10, color: "rgba(255,255,255,0.6)", mt: 0.3 }}>
+                      viewer@demo.com
+                    </Typography>
+                  </Box>
+
+                  <Box
+                    onClick={() => {
+                      setForm({ email: "buyer@demo.com", password: "demo123", remember: true });
+                    }}
+                    sx={{
+                      p: 1.2,
+                      borderRadius: 1,
+                      backgroundColor: "rgba(94,196,195,0.10)",
+                      border: "1px solid rgba(94,196,195,0.25)",
+                      cursor: "pointer",
+                      transition: "all 0.25s",
+                      "&:hover": {
+                        backgroundColor: "rgba(94,196,195,0.20)",
+                        borderColor: "rgba(94,196,195,0.50)",
+                      },
+                    }}
+                  >
+                    <Typography sx={{ fontSize: 11, fontWeight: 600, color: "#fff" }}>
+                      Buyer
+                    </Typography>
+                    <Typography sx={{ fontSize: 10, color: "rgba(255,255,255,0.6)", mt: 0.3 }}>
+                      buyer@demo.com
+                    </Typography>
+                  </Box>
+
+                  <Box
+                    onClick={() => {
+                      setForm({ email: "seller@demo.com", password: "demo123", remember: true });
+                    }}
+                    sx={{
+                      p: 1.2,
+                      borderRadius: 1,
+                      backgroundColor: "rgba(94,196,195,0.10)",
+                      border: "1px solid rgba(94,196,195,0.25)",
+                      cursor: "pointer",
+                      transition: "all 0.25s",
+                      "&:hover": {
+                        backgroundColor: "rgba(94,196,195,0.20)",
+                        borderColor: "rgba(94,196,195,0.50)",
+                      },
+                    }}
+                  >
+                    <Typography sx={{ fontSize: 11, fontWeight: 600, color: "#fff" }}>
+                      Seller
+                    </Typography>
+                    <Typography sx={{ fontSize: 10, color: "rgba(255,255,255,0.6)", mt: 0.3 }}>
+                      seller@demo.com
+                    </Typography>
+                  </Box>
+
+                  <Box
+                    onClick={() => {
+                      setForm({ email: "editor@demo.com", password: "demo123", remember: true });
+                    }}
+                    sx={{
+                      p: 1.2,
+                      borderRadius: 1,
+                      backgroundColor: "rgba(94,196,195,0.10)",
+                      border: "1px solid rgba(94,196,195,0.25)",
+                      cursor: "pointer",
+                      transition: "all 0.25s",
+                      "&:hover": {
+                        backgroundColor: "rgba(94,196,195,0.20)",
+                        borderColor: "rgba(94,196,195,0.50)",
+                      },
+                    }}
+                  >
+                    <Typography sx={{ fontSize: 11, fontWeight: 600, color: "#fff" }}>
+                      Editor
+                    </Typography>
+                    <Typography sx={{ fontSize: 10, color: "rgba(255,255,255,0.6)", mt: 0.3 }}>
+                      editor@demo.com
+                    </Typography>
+                  </Box>
+
+                  <Box
+                    onClick={() => {
+                      setForm({ email: "admin@demo.com", password: "demo123", remember: true });
+                    }}
+                    sx={{
+                      p: 1.2,
+                      borderRadius: 1,
+                      backgroundColor: "rgba(94,196,195,0.10)",
+                      border: "1px solid rgba(94,196,195,0.25)",
+                      cursor: "pointer",
+                      transition: "all 0.25s",
+                      "&:hover": {
+                        backgroundColor: "rgba(94,196,195,0.20)",
+                        borderColor: "rgba(94,196,195,0.50)",
+                      },
+                    }}
+                  >
+                    <Typography sx={{ fontSize: 11, fontWeight: 600, color: "#fff" }}>
+                      Admin
+                    </Typography>
+                    <Typography sx={{ fontSize: 10, color: "rgba(255,255,255,0.6)", mt: 0.3 }}>
+                      admin@demo.com
+                    </Typography>
+                  </Box>
+
+                  <Typography
+                    sx={{
+                      fontSize: 9,
+                      color: "rgba(255,255,255,0.5)",
+                      mt: 1,
+                      textAlign: "center",
+                    }}
+                  >
+                    Password: demo123 (for all demo accounts)
+                  </Typography>
+                </Box>
               </Box>
             </Box>
           )}
