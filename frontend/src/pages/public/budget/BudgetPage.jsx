@@ -20,6 +20,7 @@ import {
   ChevronUp,
 } from "lucide-react";
 import PageLayout from "../components/PageLayout";
+import { categoriesData } from "../components/CategorySidebar";
 
 const PRIMARY_COLOR = "#61C5C3";
 
@@ -29,13 +30,7 @@ export default function BudgetPage() {
 
   const categories = [
     "All datasets",
-    "Computer Science",
-    "Education",
-    "Classification",
-    "Computer Vision",
-    "NLP",
-    "Data Visualization",
-    "Pre-Trained Model",
+    ...categoriesData.map((cat) => cat.name),
   ];
 
   const trendingDatasets = [

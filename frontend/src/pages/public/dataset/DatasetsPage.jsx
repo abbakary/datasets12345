@@ -100,248 +100,96 @@ export default function DatasetsPage() {
     { value: "most-notebooks", label: "Most Notebooks" },
   ];
 
-  const trendingDatasets = [
-    {
-      id: 1,
-      title: "Social Media Impact on Teen Mental Health",
-      author: "Muhammad Shahzad",
-      category: "Computer Science",
-      subcategory: "Data Science",
-      usability: "10.0",
-      updated: "Updated 5 days ago",
-      files: "1 File (CSV)",
-      size: "16 kB",
-      downloads: "1,035 downloads",
-      votes: 38,
-      notebooks: 4,
-      image:
-        "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&w=900&q=80",
-      avatars: [
-        "https://i.pravatar.cc/40?img=11",
-        "https://i.pravatar.cc/40?img=14",
-      ],
-    },
-    {
-      id: 2,
-      title: "How AI is Changing Student Life",
-      author: "Tanzeela Aftab",
-      category: "Computer Science",
-      subcategory: "Artificial Intelligence",
-      usability: "10.0",
-      updated: "Updated 14 days ago",
-      files: "1 File (CSV)",
-      size: "2 kB",
-      downloads: "1,464 downloads",
-      votes: 43,
-      notebooks: 13,
-      image:
-        "https://images.unsplash.com/photo-1515879218367-8466d910aaa4?auto=format&fit=crop&w=900&q=80",
-      avatars: [
-        "https://i.pravatar.cc/40?img=21",
-        "https://i.pravatar.cc/40?img=25",
-      ],
-    },
-    {
-      id: 3,
-      title: "E-Commerce Behavior Pattern Analysis",
-      author: "Asif Zaman",
-      category: "Computer Science",
-      subcategory: "Data Science",
-      usability: "10.0",
-      updated: "Updated 10 days ago",
-      files: "3 Files (CSV)",
-      size: "151 kB",
-      downloads: "1,621 downloads",
-      votes: 49,
-      notebooks: 6,
-      image:
-        "https://images.unsplash.com/photo-1614680376573-df3480f0c6ff?auto=format&fit=crop&w=900&q=80",
-      avatars: [
-        "https://i.pravatar.cc/40?img=31",
-        "https://i.pravatar.cc/40?img=33",
-      ],
-    },
-    {
-      id: 4,
-      title: "World vs Asia Fuel Prices Comparison",
-      author: "Ahmed Khan",
-      category: "Economics",
-      subcategory: "Energy Economics",
-      usability: "9.8",
-      updated: "Updated 8 days ago",
-      files: "2 Files (CSV)",
-      size: "2.3 MB",
-      downloads: "892 downloads",
-      votes: 35,
-      notebooks: 8,
-      image:
-        "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=900&q=80",
-      avatars: [
-        "https://i.pravatar.cc/40?img=41",
-        "https://i.pravatar.cc/40?img=43",
-      ],
-    },
-    {
-      id: 5,
-      title: "Python OSV Vulnerabilities & CVSS Features",
-      author: "Kanchana1990",
-      category: "Computer Science",
-      subcategory: "Cybersecurity",
-      usability: "10.0",
-      updated: "Updated 2 days ago",
-      files: "3 Files (CSV)",
-      size: "3 MB",
-      downloads: "2,156 downloads",
-      votes: 52,
-      notebooks: 9,
-      image:
-        "https://images.unsplash.com/photo-1576091160550-2173dba999ef?auto=format&fit=crop&w=900&q=80",
-      avatars: [
-        "https://i.pravatar.cc/40?img=51",
-        "https://i.pravatar.cc/40?img=53",
-      ],
-    },
-    {
-      id: 6,
-      title: "Spotify Global Hits and Artist Analytics",
-      author: "Eman Fatima",
-      category: "Entertainment",
-      subcategory: "Music Analytics",
-      usability: "9.5",
-      updated: "Updated 12 days ago",
-      files: "3 Files (CSV)",
-      size: "9 kB",
-      downloads: "418 downloads",
-      votes: 28,
-      notebooks: 5,
-      image:
-        "https://images.unsplash.com/photo-1614680376573-df3480f0c6ff?auto=format&fit=crop&w=900&q=80",
-      avatars: [
-        "https://i.pravatar.cc/40?img=61",
-        "https://i.pravatar.cc/40?img=63",
-      ],
-    },
-    {
-      id: 7,
-      title: "Student Mental Health and Burnout Dataset",
-      author: "Mansehaj Preet",
-      category: "Computer Science",
-      subcategory: "Data Science",
-      usability: "10.0",
-      updated: "Updated 20 days ago",
-      files: "1 File (CSV)",
-      size: "3 MB",
-      downloads: "742 downloads",
-      votes: 41,
-      notebooks: 7,
-      image:
-        "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=900&q=80",
-      avatars: [
-        "https://i.pravatar.cc/40?img=71",
-        "https://i.pravatar.cc/40?img=73",
-      ],
-    },
-    {
-      id: 8,
-      title: "Deep Learning Model Architectures",
-      author: "Dr. Sarah Chen",
-      category: "Computer Science",
-      subcategory: "Machine Learning",
-      usability: "9.9",
-      updated: "Updated 3 days ago",
-      files: "5 Files (TensorFlow, PyTorch)",
-      size: "45 MB",
-      downloads: "3,214 downloads",
-      votes: 67,
-      notebooks: 12,
-      image:
-        "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?auto=format&fit=crop&w=900&q=80",
-      avatars: [
-        "https://i.pravatar.cc/40?img=81",
-        "https://i.pravatar.cc/40?img=83",
-      ],
-    },
-    {
-      id: 9,
-      title: "Computer Vision Object Detection Dataset",
-      author: "Alex Rodriguez",
-      category: "Computer Science",
-      subcategory: "Computer Vision",
-      usability: "9.7",
-      updated: "Updated 6 days ago",
-      files: "10 Files (Images, Annotations)",
-      size: "2.1 GB",
-      downloads: "892 downloads",
-      votes: 45,
-      notebooks: 8,
-      image:
-        "https://images.unsplash.com/photo-1516110833967-0b5442fabffd?auto=format&fit=crop&w=900&q=80",
-      avatars: [
-        "https://i.pravatar.cc/40?img=91",
-        "https://i.pravatar.cc/40?img=93",
-      ],
-    },
-    {
-      id: 10,
-      title: "Natural Language Processing Text Classification",
-      author: "Emma Thompson",
-      category: "Computer Science",
-      subcategory: "NLP",
-      usability: "9.8",
-      updated: "Updated 4 days ago",
-      files: "2 Files (CSV, JSON)",
-      size: "156 MB",
-      downloads: "1,543 downloads",
-      votes: 54,
-      notebooks: 10,
-      image:
-        "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=900&q=80",
-      avatars: [
-        "https://i.pravatar.cc/40?img=101",
-        "https://i.pravatar.cc/40?img=103",
-      ],
-    },
-    {
-      id: 11,
-      title: "Liver Cirrhosis Disease Prediction Dataset",
-      author: "Dr. Michael Hassan",
-      category: "Healthcare",
-      subcategory: "Medical AI",
-      usability: "10.0",
-      updated: "Updated 1 day ago",
-      files: "2 Files (CSV)",
-      size: "10 kB",
-      downloads: "92 downloads",
-      votes: 31,
-      notebooks: 4,
-      image:
-        "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&w=900&q=80",
-      avatars: [
-        "https://i.pravatar.cc/40?img=111",
-        "https://i.pravatar.cc/40?img=113",
-      ],
-    },
-    {
-      id: 12,
-      title: "Neural Network Architecture Optimization",
-      author: "Robert Chen",
-      category: "Computer Science",
-      subcategory: "Machine Learning",
-      usability: "9.6",
-      updated: "Updated 11 days ago",
-      files: "4 Files (Python, Notebooks)",
-      size: "78 MB",
-      downloads: "2,341 downloads",
-      votes: 58,
-      notebooks: 11,
-      image:
-        "https://images.unsplash.com/photo-1505228395891-9a51e7e86e81?auto=format&fit=crop&w=900&q=80",
-      avatars: [
-        "https://i.pravatar.cc/40?img=121",
-        "https://i.pravatar.cc/40?img=123",
-      ],
-    },
-  ];
+  // Comprehensive demo datasets for all categories and subcategories
+  const generateDemoDatasets = () => {
+    const datasetTemplates = [
+      { title: "Comprehensive Analysis and Trends", votes: 38, downloads: "1,035", usability: "10.0" },
+      { title: "Data Patterns and Insights Report", votes: 43, downloads: "1,464", usability: "10.0" },
+      { title: "Behavioral Analysis and Modeling", votes: 49, downloads: "1,621", usability: "10.0" },
+      { title: "Predictive Models and Forecasting", votes: 35, downloads: "892", usability: "9.8" },
+      { title: "Classification and Clustering Study", votes: 52, downloads: "2,156", usability: "10.0" },
+      { title: "Sentiment Analysis and NLP Pipeline", votes: 28, downloads: "418", usability: "9.5" },
+      { title: "Feature Engineering and Selection", votes: 41, downloads: "742", usability: "10.0" },
+      { title: "Time Series Analysis Dataset", votes: 67, downloads: "3,214", usability: "9.9" },
+      { title: "Statistical Analysis and Correlations", votes: 45, downloads: "892", usability: "9.7" },
+      { title: "Performance Optimization Study", votes: 54, downloads: "1,543", usability: "9.8" },
+    ];
+
+    const authors = [
+      "Muhammad Shahzad", "Tanzeela Aftab", "Asif Zaman", "Ahmed Khan", "Kanchana1990",
+      "Eman Fatima", "Mansehaj Preet", "Dr. Sarah Chen", "Alex Rodriguez", "Emma Thompson",
+      "Dr. Michael Hassan", "Robert Chen", "Sarah Johnson", "David Kumar", "Emily Wilson",
+    ];
+
+    const images = [
+      "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&w=900&q=80",
+      "https://images.unsplash.com/photo-1515879218367-8466d910aaa4?auto=format&fit=crop&w=900&q=80",
+      "https://images.unsplash.com/photo-1614680376573-df3480f0c6ff?auto=format&fit=crop&w=900&q=80",
+      "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=900&q=80",
+      "https://images.unsplash.com/photo-1576091160550-2173dba999ef?auto=format&fit=crop&w=900&q=80",
+      "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?auto=format&fit=crop&w=900&q=80",
+      "https://images.unsplash.com/photo-1516110833967-0b5442fabffd?auto=format&fit=crop&w=900&q=80",
+      "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=900&q=80",
+      "https://images.unsplash.com/photo-1505228395891-9a51e7e86e81?auto=format&fit=crop&w=900&q=80",
+      "https://images.unsplash.com/photo-1460925895917-adf4e5d1baaa?auto=format&fit=crop&w=900&q=80",
+    ];
+
+    const categorySubcategoryMap = [
+      { category: "Computer Science", subcategories: ["Data Science", "Artificial Intelligence", "Cybersecurity", "Machine Learning", "Computer Vision", "NLP"] },
+      { category: "Agriculture and Environment", subcategories: ["Agriculture", "Fisheries", "Forestry", "Environment & Climate"] },
+      { category: "Trade and Industry", subcategories: ["Trade & Commerce", "Import", "Export", "Manufacturing", "Industrial Development"] },
+      { category: "Infrastructure and Transport", subcategories: ["Air Transport", "Marine Transport", "Land Transport", "Public Transport", "Logistics & Supply Chain", "Construction"] },
+      { category: "Social Services", subcategories: ["Health", "Pharmaceuticals", "Education", "Research & Innovation", "Sports"] },
+      { category: "Economics", subcategories: ["Energy Economics"] },
+      { category: "Entertainment", subcategories: ["Music Analytics"] },
+      { category: "Healthcare", subcategories: ["Medical AI"] },
+      { category: "ICT and Digital Economy", subcategories: ["ICT / Telecommunications", "Digital Economy / Technology"] },
+      { category: "Finance and Investment", subcategories: ["Finance & Banking", "Insurance"] },
+      { category: "Natural Resources and Energy", subcategories: ["Energy (Electricity, Oil, Gas, Renewables)", "Mining", "Natural Resources"] },
+      { category: "Governance and Public Sector", subcategories: ["Defense", "Security / Police", "Justice / Legal", "Public Administration", "Local Government"] },
+      { category: "Urban Development and Housing", subcategories: ["Urban Development", "Real Estate / Housing", "Rural Development"] },
+      { category: "Tourism and Culture", subcategories: ["Tourism", "Hospitality", "Culture and Arts"] },
+    ];
+
+    let id = 1;
+    const datasets = [];
+
+    categorySubcategoryMap.forEach(({ category, subcategories }) => {
+      subcategories.forEach((subcategory) => {
+        for (let i = 0; i < 6; i++) {
+          const template = datasetTemplates[(id - 1) % datasetTemplates.length];
+          const author = authors[(id - 1) % authors.length];
+          const image = images[(id - 1) % images.length];
+
+          datasets.push({
+            id,
+            title: `${template.title} - ${subcategory}`,
+            author,
+            category,
+            subcategory,
+            usability: template.usability,
+            updated: `Updated ${(id % 30) + 1} days ago`,
+            files: `${(id % 5) + 1} File${(id % 5) + 1 > 1 ? "s" : ""} (CSV)`,
+            size: `${(id * 47) % 500 + 10} kB`,
+            downloads: `${parseInt(template.downloads.replace(/,/g, "")) + (id * 100)} downloads`,
+            votes: template.votes + id,
+            notebooks: (id % 15) + 1,
+            image,
+            price: ((id * 19) % 500 + 10).toFixed(2), // Price in USD (demo data)
+            avatars: [
+              `https://i.pravatar.cc/40?img=${(id % 150) + 1}`,
+              `https://i.pravatar.cc/40?img=${((id + 1) % 150) + 1}`,
+            ],
+          });
+          id++;
+        }
+      });
+    });
+
+    return datasets;
+  };
+
+  const trendingDatasets = generateDemoDatasets();
 
   const handleApplyFilters = () => {
     setAppliedFilters({ ...filters });
@@ -675,80 +523,6 @@ export default function DatasetsPage() {
             )}
           </Box>
 
-          {/* Quick Category Filter Chips */}
-          <Box
-            sx={{
-              display: "flex",
-              gap: 1,
-              flexWrap: "wrap",
-              mb: 4,
-              alignItems: "center",
-            }}
-          >
-            <Chip
-              label="All datasets"
-              onClick={() => setSelectedCategory(null)}
-              variant={!selectedCategory ? "filled" : "outlined"}
-              sx={{
-                borderRadius: "6px",
-                fontSize: "0.85rem",
-                height: 32,
-                px: 1.5,
-                backgroundColor: !selectedCategory ? PRIMARY_COLOR : "#fff",
-                color: !selectedCategory ? "#fff" : "#374151",
-                borderColor: "#d1d5db",
-                fontWeight: 500,
-                "&:hover": {
-                  backgroundColor: !selectedCategory ? PRIMARY_COLOR : "#f0fffe",
-                },
-              }}
-            />
-
-            {categoriesData.map((category) => (
-              <Chip
-                key={category.id}
-                label={category.name}
-                onClick={() => {
-                  setSelectedCategory({
-                    ...category,
-                    selectedSubcategory: null,
-                  });
-                }}
-                variant={
-                  selectedCategory?.id === category.id &&
-                  !selectedCategory?.selectedSubcategory
-                    ? "filled"
-                    : "outlined"
-                }
-                sx={{
-                  borderRadius: "6px",
-                  fontSize: "0.85rem",
-                  height: 32,
-                  px: 1.5,
-                  backgroundColor:
-                    selectedCategory?.id === category.id &&
-                    !selectedCategory?.selectedSubcategory
-                      ? PRIMARY_COLOR
-                      : "#fff",
-                  color:
-                    selectedCategory?.id === category.id &&
-                    !selectedCategory?.selectedSubcategory
-                      ? "#fff"
-                      : "#374151",
-                  borderColor: "#d1d5db",
-                  fontWeight: 500,
-                  "&:hover": {
-                    backgroundColor:
-                      selectedCategory?.id === category.id &&
-                      !selectedCategory?.selectedSubcategory
-                        ? PRIMARY_COLOR
-                        : "#f0fffe",
-                  },
-                }}
-              />
-            ))}
-          </Box>
-
           {/* Main Content Grid */}
           <Box
             sx={{
@@ -781,7 +555,7 @@ export default function DatasetsPage() {
                 }}
               >
                 <Box sx={{ display: "flex", alignItems: "center", gap: 1.2 }}>
-                  <Box sx={{ fontSize: "1.3rem" }}>🔥</Box>
+                  <TrendingUp size={24} color="#111827" strokeWidth={2.5} />
                   <Typography
                     sx={{
                       fontSize: "1.1rem",
@@ -1184,20 +958,7 @@ function DatasetCard({ dataset, viewType = "grid" }) {
           </Box>
 
           {/* Footer Info */}
-          <Box sx={{ display: "flex", alignItems: "center", gap: 1.5, mt: 1 }}>
-            <Box sx={{ display: "flex", alignItems: "center", gap: 0.5 }}>
-              {dataset.avatars.slice(0, 2).map((avatar, index) => (
-                <Avatar
-                  key={index}
-                  src={avatar}
-                  sx={{
-                    width: 24,
-                    height: 24,
-                    border: `1px solid ${PRIMARY_COLOR}`,
-                  }}
-                />
-              ))}
-            </Box>
+          <Box sx={{ display: "flex", alignItems: "center", gap: 1.5, mt: 1, justifyContent: "space-between" }}>
             <Box
               sx={{
                 display: "flex",
@@ -1211,6 +972,21 @@ function DatasetCard({ dataset, viewType = "grid" }) {
             >
               <ChevronUp size={14} />
               <span>{dataset.votes}</span>
+            </Box>
+            <Box
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                gap: 0.5,
+                padding: "6px 12px",
+                backgroundColor: "#e6f7f6",
+                borderRadius: "6px",
+                fontSize: "0.85rem",
+                fontWeight: 600,
+                color: PRIMARY_COLOR,
+              }}
+            >
+              <span>${dataset.price} USD</span>
             </Box>
           </Box>
         </Box>
@@ -1445,18 +1221,20 @@ function DatasetCard({ dataset, viewType = "grid" }) {
           </Box>
         </Box>
 
-        <Box sx={{ display: "flex", alignItems: "center", gap: 0.5 }}>
-          {dataset.avatars.map((avatar, index) => (
-            <Avatar
-              key={index}
-              src={avatar}
-              sx={{
-                width: 24,
-                height: 24,
-                border: `2px solid ${PRIMARY_COLOR}`,
-              }}
-            />
-          ))}
+        <Box
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            gap: 0.6,
+            padding: "6px 12px",
+            backgroundColor: "#e6f7f6",
+            borderRadius: "6px",
+            fontSize: "0.85rem",
+            fontWeight: 700,
+            color: PRIMARY_COLOR,
+          }}
+        >
+          <span>${dataset.price} USD</span>
         </Box>
       </Box>
     </Card>
