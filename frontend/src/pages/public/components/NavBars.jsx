@@ -10,6 +10,7 @@ import {
   Menu,
   MenuItem,
   IconButton,
+  Divider,
 } from "@mui/material";
 import {
   Database,
@@ -19,12 +20,30 @@ import {
   Wallet,
   BarChart3,
   FileText,
+  Settings,
+  User,
+  LogOut,
 } from "lucide-react";
 import logo from "../../../assets/dali-data-logo.png";
 
 const PRIMARY_COLOR = "#61C5C3";
 const TOKEN_KEY = "dali-token";
 const USER_KEY = "dali-user";
+
+/**
+ * Get the role-specific dashboard path
+ */
+const getRoleDashboardPath = (role) => {
+  const normalizedRole = String(role || "").trim().toLowerCase();
+  const dashboardPaths = {
+    admin: "/dashboard/admin",
+    editor: "/dashboard/editor",
+    seller: "/dashboard/seller",
+    buyer: "/dashboard/buyer",
+    viewer: "/dashboard/viewer",
+  };
+  return dashboardPaths[normalizedRole] || "/dashboard/viewer";
+};
 
 export default function NavBar() {
   const navigate = useNavigate();
@@ -234,10 +253,13 @@ export default function NavBar() {
                 <MenuItem
                   onClick={() => {
                     setAnchorEl(null);
-                    navigate("/dashboard");
+                    const dashboardPath = getRoleDashboardPath(authUser?.role);
+                    navigate(dashboardPath);
                   }}
+                  sx={{ display: "flex", gap: 1, alignItems: "center" }}
                 >
-                  Dashboard
+                  <BarChart3 size={16} />
+                  My Dashboard
                 </MenuItem>
 
                 <MenuItem
@@ -245,11 +267,18 @@ export default function NavBar() {
                     setAnchorEl(null);
                     navigate("/profile");
                   }}
+                  sx={{ display: "flex", gap: 1, alignItems: "center" }}
                 >
+                  <User size={16} />
                   Profile
                 </MenuItem>
 
-                <MenuItem onClick={handleLogout}>Logout</MenuItem>
+                <Divider />
+
+                <MenuItem onClick={handleLogout} sx={{ display: "flex", gap: 1, alignItems: "center" }}>
+                  <LogOut size={16} />
+                  Logout
+                </MenuItem>
               </Menu>
             </>
           ) : (
@@ -359,10 +388,13 @@ export default function NavBar() {
                     key="dashboard"
                     onClick={() => {
                       setMobileMenu(null);
-                      navigate("/dashboard");
+                      const dashboardPath = getRoleDashboardPath(authUser?.role);
+                      navigate(dashboardPath);
                     }}
+                    sx={{ display: "flex", gap: 1, alignItems: "center" }}
                   >
-                    Dashboard
+                    <BarChart3 size={16} />
+                    My Dashboard
                   </MenuItem>,
                   <MenuItem
                     key="profile"
@@ -370,7 +402,9 @@ export default function NavBar() {
                       setMobileMenu(null);
                       navigate("/profile");
                     }}
+                    sx={{ display: "flex", gap: 1, alignItems: "center" }}
                   >
+                    <User size={16} />
                     Profile
                   </MenuItem>,
                   <MenuItem
@@ -379,7 +413,9 @@ export default function NavBar() {
                       setMobileMenu(null);
                       handleLogout();
                     }}
+                    sx={{ display: "flex", gap: 1, alignItems: "center" }}
                   >
+                    <LogOut size={16} />
                     Logout
                   </MenuItem>,
                 ]
