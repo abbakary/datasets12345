@@ -29,23 +29,9 @@ import CategorySidebar from "../components/CategorySidebar";
 
 const PRIMARY_COLOR = "#61C5C3";
 
-// Default first category data
-const DEFAULT_CATEGORY = {
-  id: "agriculture",
-  name: "Agriculture and Environment",
-  icon: "🌾",
-  datasetCount: 24,
-  subcategories: [
-    { id: "agriculture-sub", name: "Agriculture", datasetCount: 8 },
-    { id: "fisheries", name: "Fisheries", datasetCount: 5 },
-    { id: "forestry", name: "Forestry", datasetCount: 4 },
-    { id: "environment", name: "Environment & Climate", datasetCount: 7 },
-  ],
-};
-
 export default function DatasetsPage() {
   const [search, setSearch] = useState("");
-  const [selectedCategory, setSelectedCategory] = useState(DEFAULT_CATEGORY);
+  const [selectedCategory, setSelectedCategory] = useState(null);
 
   const trendingDatasets = [
     {
@@ -123,25 +109,25 @@ export default function DatasetsPage() {
       dataset.title.toLowerCase().includes(search.toLowerCase()) ||
       dataset.author.toLowerCase().includes(search.toLowerCase());
 
+    if (!matchesSearch) return false;
+
     // If no category is selected, show all datasets
     if (!selectedCategory) {
-      return matchesSearch;
+      return true;
     }
 
     // If a specific subcategory is selected
     if (selectedCategory.selectedSubcategory) {
       return (
-        matchesSearch &&
-        (dataset.title.toLowerCase().includes(selectedCategory.selectedSubcategory.name.toLowerCase()) ||
-          dataset.title.toLowerCase().includes(selectedCategory.name.toLowerCase()))
+        dataset.title.toLowerCase().includes(selectedCategory.selectedSubcategory.name.toLowerCase()) ||
+        dataset.title.toLowerCase().includes(selectedCategory.name.toLowerCase())
       );
     }
 
     // If only main category is selected
     return (
-      matchesSearch &&
-      (dataset.title.toLowerCase().includes(selectedCategory.name.toLowerCase()) ||
-        dataset.author.toLowerCase().includes(selectedCategory.name.toLowerCase()))
+      dataset.title.toLowerCase().includes(selectedCategory.name.toLowerCase()) ||
+      dataset.author.toLowerCase().includes(selectedCategory.name.toLowerCase())
     );
   });
 
@@ -223,154 +209,178 @@ export default function DatasetsPage() {
 
             {/* Main Content */}
             <Box>
-              {/* Category Header with Subcategory Chips */}
+              {/* Header with Category Chips on Same Line */}
               <Box
                 sx={{
-                  mb: 4,
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "space-between",
+                  mb: 3,
                 }}
               >
-                <Box
-                  sx={{
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "space-between",
-                    mb: 2,
-                  }}
-                >
-                  <Box sx={{ display: "flex", alignItems: "center", gap: 1.2 }}>
-                    <TrendingUp size={20} color="#111827" />
-                    <Typography
-                      sx={{
-                        fontSize: "1.3rem",
-                        fontWeight: 700,
-                        color: "#111827",
-                      }}
-                    >
-                      All Datasets
-                    </Typography>
-                  </Box>
-
+                <Box sx={{ display: "flex", alignItems: "center", gap: 1.2 }}>
+                  <TrendingUp size={20} color="#111827" />
                   <Typography
                     sx={{
-                      fontSize: "0.9rem",
-                      fontWeight: 600,
-                      color: PRIMARY_COLOR,
-                      cursor: "pointer",
+                      fontSize: "1.3rem",
+                      fontWeight: 700,
+                      color: "#111827",
                     }}
                   >
-                    See All
+                    Datasets
                   </Typography>
                 </Box>
 
-                {/* Subcategory Chips */}
-                {selectedCategory && selectedCategory.subcategories && (
-                  <Box
-                    sx={{
-                      display: "flex",
-                      gap: 1.2,
-                      flexWrap: "wrap",
-                      mt: 2,
+                <Typography
+                  sx={{
+                    fontSize: "0.9rem",
+                    fontWeight: 600,
+                    color: PRIMARY_COLOR,
+                    cursor: "pointer",
+                  }}
+                >
+                  See All
+                </Typography>
+              </Box>
+
+              {/* Category Chips Row */}
+              <Box
+                sx={{
+                  display: "flex",
+                  gap: 1.2,
+                  flexWrap: "wrap",
+                  mb: 4,
+                  alignItems: "center",
+                }}
+              >
+                {/* "All Datasets" Chip */}
+                <Chip
+                  label="All Datasets"
+                  onClick={() => setSelectedCategory(null)}
+                  variant={!selectedCategory ? "filled" : "outlined"}
+                  sx={{
+                    borderRadius: "6px",
+                    fontSize: "0.85rem",
+                    height: 32,
+                    px: 1.5,
+                    backgroundColor: !selectedCategory ? PRIMARY_COLOR : "#fff",
+                    color: !selectedCategory ? "#fff" : "#374151",
+                    borderColor: "#d1d5db",
+                    fontWeight: 600,
+                    "&:hover": {
+                      backgroundColor: !selectedCategory
+                        ? PRIMARY_COLOR
+                        : "#e6f7f6",
+                    },
+                  }}
+                />
+
+                {/* Main Category Chip (if selected) */}
+                {selectedCategory && (
+                  <Chip
+                    label={selectedCategory.name}
+                    onClick={() => {
+                      setSelectedCategory({
+                        ...selectedCategory,
+                        selectedSubcategory: null,
+                      });
                     }}
-                  >
-                    {/* "All" chip for this category */}
+                    variant={
+                      selectedCategory && !selectedCategory.selectedSubcategory
+                        ? "filled"
+                        : "outlined"
+                    }
+                    onDelete={() => setSelectedCategory(null)}
+                    deleteIcon={<X size={14} />}
+                    sx={{
+                      borderRadius: "6px",
+                      fontSize: "0.85rem",
+                      height: 32,
+                      px: 1.5,
+                      backgroundColor:
+                        selectedCategory && !selectedCategory.selectedSubcategory
+                          ? PRIMARY_COLOR
+                          : "#fff",
+                      color:
+                        selectedCategory && !selectedCategory.selectedSubcategory
+                          ? "#fff"
+                          : "#374151",
+                      borderColor: "#d1d5db",
+                      fontWeight: 600,
+                      "&:hover": {
+                        backgroundColor:
+                          selectedCategory &&
+                          !selectedCategory.selectedSubcategory
+                            ? PRIMARY_COLOR
+                            : "#e6f7f6",
+                      },
+                    }}
+                  />
+                )}
+
+                {/* Subcategory Chips (if selected) */}
+                {selectedCategory &&
+                  selectedCategory.subcategories &&
+                  selectedCategory.subcategories.map((subcategory) => (
                     <Chip
-                      label={selectedCategory.name}
+                      key={subcategory.id}
+                      label={subcategory.name}
                       onClick={() => {
                         setSelectedCategory({
                           ...selectedCategory,
-                          selectedSubcategory: null,
+                          selectedSubcategory: subcategory,
                         });
                       }}
                       variant={
-                        !selectedCategory.selectedSubcategory
+                        selectedCategory.selectedSubcategory?.id ===
+                        subcategory.id
                           ? "filled"
                           : "outlined"
+                      }
+                      onDelete={
+                        selectedCategory.selectedSubcategory?.id ===
+                        subcategory.id
+                          ? () => {
+                              setSelectedCategory({
+                                ...selectedCategory,
+                                selectedSubcategory: null,
+                              });
+                            }
+                          : undefined
+                      }
+                      deleteIcon={
+                        selectedCategory.selectedSubcategory?.id ===
+                        subcategory.id ? (
+                          <X size={14} />
+                        ) : undefined
                       }
                       sx={{
                         borderRadius: "6px",
                         fontSize: "0.85rem",
                         height: 32,
-                        px: 1,
+                        px: 1.5,
                         backgroundColor:
-                          !selectedCategory.selectedSubcategory
+                          selectedCategory.selectedSubcategory?.id ===
+                          subcategory.id
                             ? PRIMARY_COLOR
                             : "#fff",
-                        color: !selectedCategory.selectedSubcategory
-                          ? "#fff"
-                          : "#374151",
+                        color:
+                          selectedCategory.selectedSubcategory?.id ===
+                          subcategory.id
+                            ? "#fff"
+                            : "#374151",
                         borderColor: "#d1d5db",
-                        fontWeight: 600,
+                        fontWeight: 500,
                         "&:hover": {
-                          backgroundColor: !selectedCategory.selectedSubcategory
-                            ? PRIMARY_COLOR
-                            : "#e6f7f6",
-                        },
-                      }}
-                    />
-
-                    {/* Subcategory chips */}
-                    {selectedCategory.subcategories.map((subcategory) => (
-                      <Chip
-                        key={subcategory.id}
-                        label={subcategory.name}
-                        onClick={() => {
-                          setSelectedCategory({
-                            ...selectedCategory,
-                            selectedSubcategory: subcategory,
-                          });
-                        }}
-                        variant={
-                          selectedCategory.selectedSubcategory?.id ===
-                          subcategory.id
-                            ? "filled"
-                            : "outlined"
-                        }
-                        onDelete={
-                          selectedCategory.selectedSubcategory?.id ===
-                          subcategory.id
-                            ? () => {
-                                setSelectedCategory({
-                                  ...selectedCategory,
-                                  selectedSubcategory: null,
-                                });
-                              }
-                            : undefined
-                        }
-                        deleteIcon={
-                          selectedCategory.selectedSubcategory?.id ===
-                          subcategory.id ? (
-                            <X size={14} />
-                          ) : undefined
-                        }
-                        sx={{
-                          borderRadius: "6px",
-                          fontSize: "0.85rem",
-                          height: 32,
-                          px: 1,
                           backgroundColor:
                             selectedCategory.selectedSubcategory?.id ===
                             subcategory.id
                               ? PRIMARY_COLOR
-                              : "#fff",
-                          color:
-                            selectedCategory.selectedSubcategory?.id ===
-                            subcategory.id
-                              ? "#fff"
-                              : "#374151",
-                          borderColor: "#d1d5db",
-                          fontWeight: 500,
-                          "&:hover": {
-                            backgroundColor:
-                              selectedCategory.selectedSubcategory?.id ===
-                              subcategory.id
-                                ? PRIMARY_COLOR
-                                : "#e6f7f6",
-                          },
-                        }}
-                      />
-                    ))}
-                  </Box>
-                )}
+                              : "#e6f7f6",
+                        },
+                      }}
+                    />
+                  ))}
               </Box>
 
               {/* Datasets Grid */}

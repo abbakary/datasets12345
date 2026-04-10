@@ -128,7 +128,10 @@ export default function CategorySidebar({ onCategorySelect, selectedCategory }) 
   const [hoveredCategoryId, setHoveredCategoryId] = useState(null);
 
   const handleSelectCategory = (category) => {
-    onCategorySelect(category);
+    onCategorySelect({
+      ...category,
+      selectedSubcategory: null,
+    });
   };
 
   const handleSelectSubcategory = (parentCategory, subcategory) => {
@@ -157,7 +160,6 @@ export default function CategorySidebar({ onCategorySelect, selectedCategory }) 
           xs: 3,
           md: 0,
         },
-        position: "relative",
       }}
     >
       <Paper
@@ -166,7 +168,7 @@ export default function CategorySidebar({ onCategorySelect, selectedCategory }) 
           backgroundColor: "#fff",
           border: "1px solid #e5e7eb",
           borderRadius: "12px",
-          overflow: "hidden",
+          overflow: "visible",
         }}
       >
         <Box sx={{ p: 2.5 }}>
@@ -182,14 +184,16 @@ export default function CategorySidebar({ onCategorySelect, selectedCategory }) 
           </Typography>
         </Box>
 
-        <Box sx={{ maxHeight: "calc(100vh - 300px)", overflowY: "auto" }}>
+        <Box sx={{ maxHeight: "calc(100vh - 300px)", overflowY: "auto", overflowX: "visible" }}>
           {categoriesData.map((category) => {
             const isSelected =
               selectedCategory?.id === category.id &&
               !selectedCategory?.selectedSubcategory;
+            const isHovered = hoveredCategoryId === category.id;
 
             return (
               <Box key={category.id} sx={{ position: "relative" }}>
+                {/* Category Item */}
                 <Box
                   onMouseEnter={() => setHoveredCategoryId(category.id)}
                   onMouseLeave={() => setHoveredCategoryId(null)}
@@ -211,11 +215,11 @@ export default function CategorySidebar({ onCategorySelect, selectedCategory }) 
                     },
                   }}
                 >
-                  <Typography sx={{ fontSize: "1.3rem" }}>
+                  <Typography sx={{ fontSize: "1.3rem", flexShrink: 0 }}>
                     {category.icon}
                   </Typography>
 
-                  <Box sx={{ flex: 1 }}>
+                  <Box sx={{ flex: 1, minWidth: 0 }}>
                     <Typography
                       sx={{
                         fontSize: "0.95rem",
@@ -238,23 +242,34 @@ export default function CategorySidebar({ onCategorySelect, selectedCategory }) 
                   </Box>
                 </Box>
 
-                {/* Hover Submenu */}
-                {hoveredCategoryId === category.id && (
+                {/* Hover Submenu - Appears on hover */}
+                {isHovered && (
                   <Box
                     onMouseEnter={() => setHoveredCategoryId(category.id)}
                     onMouseLeave={() => setHoveredCategoryId(null)}
                     sx={{
-                      position: "absolute",
-                      left: "100%",
-                      top: 0,
-                      ml: 1,
-                      minWidth: 270,
+                      position: "fixed",
+                      left: {
+                        xs: "50%",
+                        md: "calc(100% + 12px)",
+                      },
+                      top: {
+                        xs: "50%",
+                        md: "auto",
+                      },
+                      transform: {
+                        xs: "translate(-50%, -50%)",
+                        md: "none",
+                      },
+                      minWidth: { xs: 280, md: 260 },
+                      maxWidth: 300,
                       backgroundColor: "#fff",
-                      border: `1px solid ${PRIMARY_COLOR}`,
+                      border: `2px solid ${PRIMARY_COLOR}`,
                       borderRadius: "12px",
-                      boxShadow: "0 10px 30px rgba(0, 0, 0, 0.12)",
-                      zIndex: 1000,
+                      boxShadow: "0 12px 32px rgba(97, 197, 195, 0.15)",
+                      zIndex: 999,
                       py: 1,
+                      backdropFilter: "blur(0px)",
                     }}
                   >
                     {category.subcategories.map((subcategory) => {
@@ -265,26 +280,25 @@ export default function CategorySidebar({ onCategorySelect, selectedCategory }) 
                       return (
                         <Box
                           key={subcategory.id}
-                          onClick={() =>
-                            handleSelectSubcategory(category, subcategory)
-                          }
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            handleSelectSubcategory(category, subcategory);
+                            setHoveredCategoryId(null);
+                          }}
                           sx={{
                             display: "flex",
                             alignItems: "center",
-                            gap: 1,
+                            gap: 1.2,
                             px: 2.5,
-                            py: 1.2,
+                            py: 1.1,
                             cursor: "pointer",
                             backgroundColor: isSubSelected
                               ? "#e6f7f6"
                               : "transparent",
-                            borderLeft: isSubSelected
-                              ? `3px solid ${PRIMARY_COLOR}`
-                              : "3px solid transparent",
                             color: isSubSelected ? PRIMARY_COLOR : "#374151",
-                            transition: "all 0.2s ease",
+                            transition: "all 0.15s ease",
                             "&:hover": {
-                              backgroundColor: "#f0fffe",
+                              backgroundColor: "#f3fffe",
                             },
                           }}
                         >
@@ -293,6 +307,9 @@ export default function CategorySidebar({ onCategorySelect, selectedCategory }) 
                               fontSize: "0.9rem",
                               fontWeight: isSubSelected ? 600 : 500,
                               flex: 1,
+                              overflow: "hidden",
+                              textOverflow: "ellipsis",
+                              whiteSpace: "nowrap",
                             }}
                           >
                             {subcategory.name}
@@ -305,10 +322,11 @@ export default function CategorySidebar({ onCategorySelect, selectedCategory }) 
                                   ? PRIMARY_COLOR
                                   : "#d1d5db",
                                 color: isSubSelected ? "#fff" : "#374151",
-                                fontSize: "0.7rem",
-                                height: 20,
-                                minWidth: 20,
-                                padding: "0 4px",
+                                fontSize: "0.65rem",
+                                height: 18,
+                                minWidth: 18,
+                                padding: "0 3px",
+                                fontWeight: 700,
                               },
                             }}
                           />
